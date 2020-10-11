@@ -1,12 +1,19 @@
 package org.hyperskill;
 
+import java.util.Objects;
+
 public class Price {
     public static final Price FREE = new Price(0, 0);
 
     private final int dollars;
     private final int cents;
 
-    public Price(int dollars, int cents) {
+    private Price(int dollars, int cents) {
+        this.dollars = dollars;
+        this.cents = cents;
+    }
+
+    public static Price build(int dollars, int cents){
         if (dollars < 0){
             dollars = 0;
         }
@@ -17,8 +24,7 @@ public class Price {
             cents -= 100;
             dollars++;
         }
-        this.dollars = dollars;
-        this.cents = cents;
+        return new Price(dollars, cents);
     }
 
     public int[] getValue(){
@@ -34,5 +40,27 @@ public class Price {
         }
         dollars += this.dollars + price.dollars;
         return new Price(dollars, cents);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Price price = (Price) o;
+        return dollars == price.dollars &&
+                cents == price.cents;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dollars, cents);
+    }
+
+    @Override
+    public String toString() {
+        return "Price{" +
+                "dollars=" + dollars +
+                ", cents=" + cents +
+                '}';
     }
 }
