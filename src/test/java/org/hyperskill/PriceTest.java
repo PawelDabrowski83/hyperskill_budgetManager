@@ -40,4 +40,19 @@ public class PriceTest {
                 Arguments.of(Price.build(10, 12), Price.FREE, Price.build(10, 12))
         );
     }
+
+    @DisplayName("should getDecimal return decimal value of price")
+    @ParameterizedTest
+    @MethodSource("getDecimalArgumentsProvider")
+    void getDecimal(double expected, Price given){
+        assertEquals(expected, given.getDecimal(), 0.01);
+    }
+    private static Stream<Arguments> getDecimalArgumentsProvider(){
+        return Stream.of(
+                Arguments.of(0.5, Price.build(0, 50)),
+                Arguments.of(0.05, Price.build(0, 5)),
+                Arguments.of(5.0, Price.build(5, 0)),
+                Arguments.of(1.99, Price.build(1, 99))
+        );
+    }
 }

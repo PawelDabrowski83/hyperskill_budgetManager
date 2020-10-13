@@ -63,4 +63,8 @@ public class Price {
                 ", cents=" + cents +
                 '}';
     }
+
+    public double getDecimal(){
+        return dollars + cents * 0.01;
+    }
 }
