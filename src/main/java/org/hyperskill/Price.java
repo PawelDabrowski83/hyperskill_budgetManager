@@ -27,6 +27,26 @@ public class Price {
         return new Price(dollars, cents);
     }
 
+    public static Price build(double number){
+        int dollars = (int) Math.floor(number);
+        StringBuilder centsAsString = new StringBuilder(String.valueOf(number));
+        int indexOfDecimalPoint = centsAsString.toString().indexOf('.');
+        centsAsString = new StringBuilder(centsAsString.substring(indexOfDecimalPoint + 1, centsAsString.length()));
+        if(centsAsString.length() > 2){
+            centsAsString = new StringBuilder(centsAsString.substring(0, 2));
+        }
+        while (centsAsString.length() < 2){
+            centsAsString.append("0");
+        }
+        int cents = 0;
+        try{
+            cents = Integer.parseInt(centsAsString.toString());
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        return build(dollars, cents);
+    }
+
     public int[] getValue(){
         return new int[]{dollars, cents};
     }
