@@ -79,13 +79,17 @@ public class UserMenu {
     }
 
     private static void showPurchasesList(){
+        if (purchases.isEmpty()){
+            System.out.println(PURCHASE_LIST_EMPTY);
+            return;
+        }
         System.out.println("");
         Price totalNet = Price.FREE;
         for (Purchase purchase : purchases){
             System.out.printf(PURCHASE_ENTRY, purchase.getName(), purchase.getPrice());
             totalNet = totalNet.addPrice(Price.build(purchase.getPrice()));
         }
-        System.out.printf(PURCHASE_TOTAL);
+        System.out.printf(PURCHASE_TOTAL, totalNet.getDecimal());
     }
 
 }
