@@ -52,7 +52,23 @@ public class PriceTest {
                 Arguments.of(0.5, Price.build(0, 50)),
                 Arguments.of(0.05, Price.build(0, 5)),
                 Arguments.of(5.0, Price.build(5, 0)),
-                Arguments.of(1.99, Price.build(1, 99))
+                Arguments.of(1.99, Price.build(1, 99)),
+                Arguments.of(0, Price.FREE)
+        );
+    }
+
+    @DisplayName("should build(double) return valid Price value")
+    @ParameterizedTest
+    @MethodSource("buildArgumentsProvider")
+    void build(Price expected, double given){
+        assertEquals(expected, Price.build(given));
+    }
+    private static Stream<Arguments> buildArgumentsProvider(){
+        return Stream.of(
+                Arguments.of(Price.FREE, 0),
+                Arguments.of(Price.build(12, 10), 12.1),
+                Arguments.of(Price.build(0, 99), 0.99),
+                Arguments.of(Price.build(7, 79), 7.7999999)
         );
     }
 }
