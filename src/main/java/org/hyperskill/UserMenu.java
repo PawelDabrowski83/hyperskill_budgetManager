@@ -20,7 +20,7 @@ public class UserMenu {
     public static final String ENTER_PURCHASE_PRICE = "Enter its price:";
     public static final String PURCHASE_ADDED = "Purchase was added!";
     public static final String PURCHASE_ENTRY = "%s $%.2f" + System.lineSeparator();
-    public static final String PURCHASE_TOTAL = "Total sum: $%2f" + System.lineSeparator();
+    public static final String PURCHASE_TOTAL = "Total sum: $%.2f" + System.lineSeparator();
     public static final String EXIT = "Bye!";
     private static Price balance = Price.FREE;
     private static final Set<Purchase> purchases = new HashSet<>();
@@ -47,6 +47,7 @@ public class UserMenu {
             }
             System.out.println(MENU_COMMAND);
             command = scanner.nextLine();
+
 
         }
         exitConsole();
