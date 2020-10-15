@@ -71,4 +71,19 @@ public class PriceTest {
                 Arguments.of(Price.build(7, 79), 7.7999999)
         );
     }
+
+    @DisplayName("should compareTo() work properly")
+    @ParameterizedTest
+    @MethodSource("compareToArgumentsProvider")
+    void compareTo(int expected, Price p1, Price p2){
+        assertEquals(expected, p1.compareTo(p2));
+    }
+    private static Stream<Arguments> compareToArgumentsProvider(){
+        return Stream.of(
+                Arguments.of(0, Price.FREE, Price.FREE),
+                Arguments.of(0, Price.build(0, 10), Price.build(0, 10)),
+                Arguments.of(1, Price.build(1, 99), Price.build(0, 99)),
+                Arguments.of(-1, Price.build(1, 1), Price.build(1, 10))
+        );
+    }
 }
