@@ -2,7 +2,7 @@ package org.hyperskill;
 
 import java.util.Objects;
 
-public class Price {
+public class Price implements Comparable<Price>{
     public static final Price FREE = new Price(0, 0);
 
     private final int dollars;
@@ -86,5 +86,10 @@ public class Price {
 
     public double getDecimal(){
         return dollars + cents * 0.01;
+    }
+
+    @Override
+    public int compareTo(Price o) {
+        return Double.compare(this.getDecimal(), o.getDecimal());
     }
 }
