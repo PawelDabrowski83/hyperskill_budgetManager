@@ -65,7 +65,7 @@ public class UserMenu {
     private static void addIncome(Scanner scanner){
         System.out.println(ENTER_INCOME);
         int income = scanner.nextInt();
-        balance = balance.addPrice(Price.build(income, 0));
+        balance = balance.add(Price.build(income, 0));
         System.out.println(INCOME_ADDED);
     }
 
@@ -88,7 +88,7 @@ public class UserMenu {
         Price totalNet = Price.FREE;
         for (Purchase purchase : purchases){
             System.out.printf(PURCHASE_ENTRY, purchase.getName(), purchase.getPrice());
-            totalNet = totalNet.addPrice(Price.build(purchase.getPrice()));
+            totalNet = totalNet.add(Price.build(purchase.getPrice()));
         }
         System.out.printf(PURCHASE_TOTAL, totalNet.getDecimal());
     }
