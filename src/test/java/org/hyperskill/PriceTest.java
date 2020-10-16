@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PriceTest {
 
+
+
     @DisplayName("should getValue() work")
     @ParameterizedTest
     @MethodSource("getValueArgumentsProvider")
@@ -27,13 +29,13 @@ public class PriceTest {
         );
     }
 
-    @DisplayName("should addPrice() add two prices")
+    @DisplayName("should Price.add() add two prices")
     @ParameterizedTest
-    @MethodSource("addPriceArgumentsProvider")
+    @MethodSource("addArgumentsProvider")
     void addPrice(Price expected, Price base, Price added){
-        assertEquals(expected, base.addPrice(added));
+        assertEquals(expected, base.add(added));
     }
-    private static Stream<Arguments> addPriceArgumentsProvider(){
+    private static Stream<Arguments> addArgumentsProvider(){
         return Stream.of(
                 Arguments.of(Price.FREE, Price.FREE, Price.FREE),
                 Arguments.of(Price.build(1, 0), Price.build(0, 50), Price.build(0, 50)),
@@ -86,4 +88,27 @@ public class PriceTest {
                 Arguments.of(-1, Price.build(1, 1), Price.build(1, 10))
         );
     }
+
+    @DisplayName("should subtract(Price) return calculation result")
+    @ParameterizedTest
+    @MethodSource("subtractArgumentsProvider")
+    void subtract(Price expected, Price p1, Price p2){
+        assertEquals(expected, p1.subtract(p2));
+    }
+
+    private static Stream<Arguments> subtractArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(Price.FREE, Price.FREE, Price.FREE),
+                Arguments.of(Price.build(1, 0), Price.build(1, 0), Price.FREE),
+                Arguments.of(Price.FREE, Price.build(1, 99), Price.build(2, 0)),
+                Arguments.of(Price.FREE, Price.FREE, Price.build(99, 12)),
+                Arguments.of(Price.build(17, 19), Price.build(18, 20), Price.build(1, 1)),
+                Arguments.of(Price.FREE, Price.build(9, 99), Price.build(9, 99)),
+                Arguments.of(Price.FREE, Price.build(9, 13), Price.build(9, 20)),
+                Arguments.of(Price.build(1, 15), Price.build(1, 15), Price.FREE),
+                Arguments.of(Price.build(Integer.MAX_VALUE - 1, 0), Price.build(Integer.MAX_VALUE, 0), Price.build(1, 0)),
+                Arguments.of(Price.build(1, 12), Price.build(2, 3), Price.build(0, 91))
+        );
+    }
+
 }

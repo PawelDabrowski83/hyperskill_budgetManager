@@ -51,7 +51,7 @@ public class Price implements Comparable<Price>{
         return new int[]{dollars, cents};
     }
 
-    public Price addPrice(Price price){
+    public Price add(Price price){
         int cents = this.cents + price.cents;
         int dollars = 0;
         while (cents >= 100){
@@ -60,6 +60,24 @@ public class Price implements Comparable<Price>{
         }
         dollars += this.dollars + price.dollars;
         return new Price(dollars, cents);
+    }
+
+    protected Price subtract(Price price){
+        if (this.equals(price) || this.compareTo(price) < 0){
+            return Price.FREE;
+        }
+        if (Price.FREE.equals(price)){
+            return this;
+        }
+        int baseCents = this.cents;
+        int baseDollars = this.dollars;
+        if (baseCents < price.cents){
+            baseCents += 100;
+            baseDollars--;
+        }
+        int targetCents = baseCents - price.cents;
+        int targetDollars = baseDollars - price.dollars;
+        return Price.build(targetDollars, targetCents);
     }
 
     @Override
