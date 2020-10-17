@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public enum PurchaseCategories {
+public enum PurchaseCategory {
     FOOD("1", "Food"),
     CLOTHES("2", "Clothes"),
     ENTERTAINMENT("3", "Entertainment"),
@@ -16,10 +16,10 @@ public enum PurchaseCategories {
 
     private final String value;
     private final String label;
-    private static final Map<String, PurchaseCategories> lookUp = Arrays.stream(values())
-            .collect(Collectors.toMap(PurchaseCategories::getValue, Function.identity()));
+    private static final Map<String, PurchaseCategory> lookUp = Arrays.stream(values())
+            .collect(Collectors.toMap(PurchaseCategory::getValue, Function.identity()));
 
-    PurchaseCategories(String value, String label) {
+    PurchaseCategory(String value, String label) {
         this.value = value;
         this.label = label;
     }
@@ -32,7 +32,7 @@ public enum PurchaseCategories {
         return label;
     }
 
-    public static PurchaseCategories getByValue(String value){
-        return lookUp.getOrDefault(value, PurchaseCategories.DEFAULT);
+    public static PurchaseCategory getByValue(String value){
+        return lookUp.getOrDefault(value, PurchaseCategory.DEFAULT);
     }
 }

@@ -81,7 +81,7 @@ public class UserMenu {
         String purchaseName = scanner.nextLine();
         System.out.println(ENTER_PURCHASE_PRICE);
         double purchasePrice = scanner.nextDouble();
-        Purchase thisPurchase = new Purchase(purchaseName, purchasePrice);
+        Purchase thisPurchase = new Purchase(purchaseName, purchasePrice, null);
         purchases.add(thisPurchase);
         System.out.println(PURCHASE_ADDED);
     }
