@@ -16,6 +16,13 @@ public class UserMenu {
     public static final String INCOME_ADDED = "Income was added!";
     public static final String BALANCE = "Balance: $%.2f" + System.lineSeparator();
     public static final String PURCHASE_LIST_EMPTY = "Purchase list is empty";
+    public static final String PURCHASE_MENU = "Choose the type of purchase\n" +
+            "1) Food\n" +
+            "2) Clothes\n" +
+            "3) Entertainment\n" +
+            "4) Other\n" +
+            "5) Back";
+    public static final String PURCHASE_CATEGORY_LABEL = "%s:\n";
     public static final String ENTER_PURCHASE_NAME = "Enter purchase name:";
     public static final String ENTER_PURCHASE_PRICE = "Enter its price:";
     public static final String PURCHASE_ADDED = "Purchase was added!";
@@ -74,7 +81,7 @@ public class UserMenu {
         String purchaseName = scanner.nextLine();
         System.out.println(ENTER_PURCHASE_PRICE);
         double purchasePrice = scanner.nextDouble();
-        Purchase thisPurchase = new Purchase(purchaseName, purchasePrice);
+        Purchase thisPurchase = new Purchase(purchaseName, purchasePrice, null);
         purchases.add(thisPurchase);
         System.out.println(PURCHASE_ADDED);
     }
