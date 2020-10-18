@@ -14,7 +14,7 @@ public class UserMenu {
             "0) Exit";
     public static final String ENTER_INCOME = "Enter income:";
     public static final String INCOME_ADDED = "Income was added!";
-    public static final String BALANCE = "Balance: $%.2f" + System.lineSeparator();
+    public static final String BALANCE = "Balance: $%.2f\n\n";
     public static final String PURCHASE_LIST_EMPTY = "Purchase list is empty";
     public static final String PURCHASE_MENU = "Choose the type of purchase\n" +
             "1) Food\n" +
@@ -45,7 +45,7 @@ public class UserMenu {
                     addPurchase(scanner);
                     break;
                 case SHOW_LIST_OF_PURCHASES:
-                    showPurchasesList();
+                    showPurchasesList(scanner);
                     break;
                 case BALANCE:
                     showBalance();
@@ -54,7 +54,7 @@ public class UserMenu {
             }
             System.out.println(MENU_COMMAND);
             command = scanner.nextLine();
-
+            System.out.println();
 
         }
         exitConsole();
@@ -77,27 +77,44 @@ public class UserMenu {
     }
 
     private static void addPurchase(Scanner scanner){
-        System.out.println(ENTER_PURCHASE_NAME);
-        String purchaseName = scanner.nextLine();
-        System.out.println(ENTER_PURCHASE_PRICE);
-        double purchasePrice = scanner.nextDouble();
-        Purchase thisPurchase = new Purchase(purchaseName, purchasePrice, null);
-        purchases.add(thisPurchase);
-        System.out.println(PURCHASE_ADDED);
+        PurchaseCategory purchaseCategory = PurchaseCategory.DEFAULT;
+        while(!PurchaseCategory.BACK.equals(purchaseCategory)){
+            purchaseCategory = getPurchaseCategory(scanner);
+            System.out.println();
+            System.out.println(ENTER_PURCHASE_NAME);
+            String purchaseName = scanner.nextLine();
+            System.out.println(ENTER_PURCHASE_PRICE);
+            double purchasePrice = scanner.nextDouble();
+            Purchase thisPurchase = new Purchase(purchaseName, purchasePrice, purchaseCategory);
+            purchases.add(thisPurchase);
+            System.out.println(PURCHASE_ADDED);
+        }
     }
 
-    private static void showPurchasesList(){
+    private static PurchaseCategory getPurchaseCategory(Scanner scanner){
+        System.out.println(PURCHASE_MENU);
+        return PurchaseCategory.getByValue(scanner.nextLine());
+    }
+
+    private static void showPurchasesList(Scanner scanner){
         if (purchases.isEmpty()){
             System.out.println(PURCHASE_LIST_EMPTY);
             return;
         }
+        PurchaseCategory purchaseCategory = getPurchaseCategory(scanner);
         System.out.println("");
+        System.out.printf(PURCHASE_CATEGORY_LABEL, purchaseCategory.getLabel());
+
         Price totalNet = Price.FREE;
         for (Purchase purchase : purchases){
-            System.out.printf(PURCHASE_ENTRY, purchase.getName(), purchase.getPrice());
-            totalNet = totalNet.add(Price.build(purchase.getPrice()));
+            if (purchaseCategory.equals(PurchaseCategory.ALL) || purchase.getCategory().equals(purchaseCategory)) {
+                System.out.printf(PURCHASE_ENTRY, purchase.getName(), purchase.getPrice());
+                totalNet = totalNet.add(Price.build(purchase.getPrice()));
+            }
         }
         System.out.printf(PURCHASE_TOTAL, totalNet.getDecimal());
+
+
     }
 
 }
